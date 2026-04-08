@@ -113,7 +113,7 @@ const ChatInterface = () => {
             <div>
               <p className="font-semibold text-foreground text-sm">Excel Invisible AI</p>
               <div className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
                 <span className="text-xs text-muted-foreground">En línea · Modelo NLP v2.0</span>
               </div>
             </div>
