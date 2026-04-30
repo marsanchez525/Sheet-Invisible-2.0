@@ -33,8 +33,11 @@ const Navbar = () => {
           ))}
         </div>
 
-        <div className="hidden md:block">
-          <a href="#chat" className="px-5 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:scale-105 transition-transform inline-block">
+        <div className="hidden md:flex items-center gap-3">
+          <a href="/auth" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            Iniciar sesión
+          </a>
+          <a href="/app" className="px-5 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:scale-105 transition-transform inline-block glow-primary">
             Probar IA
           </a>
         </div>
@@ -64,7 +67,10 @@ const Navbar = () => {
                   {l.label}
                 </a>
               ))}
-              <a href="#chat" onClick={() => setOpen(false)} className="block px-5 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium text-center">
+              <a href="/auth" onClick={() => setOpen(false)} className="block text-sm text-muted-foreground">
+                Iniciar sesión
+              </a>
+              <a href="/app" onClick={() => setOpen(false)} className="block px-5 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium text-center">
                 Probar IA
               </a>
             </div>
