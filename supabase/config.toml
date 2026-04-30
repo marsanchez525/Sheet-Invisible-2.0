@@ -1,1 +1,4 @@
 project_id = "glhozvnfkxrehqjxzdla"
+
+[functions.excel-ai-chat]
+verify_jwt = false
