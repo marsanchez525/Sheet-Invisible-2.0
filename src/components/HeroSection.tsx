@@ -70,7 +70,7 @@ const HeroSection = () => {
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
           <a
-            href="#chat"
+            href="/app"
             className="px-8 py-4 rounded-lg bg-primary text-primary-foreground font-semibold text-lg glow-primary hover:scale-105 transition-transform flex items-center gap-2"
           >
             <Brain className="w-5 h-5" />
