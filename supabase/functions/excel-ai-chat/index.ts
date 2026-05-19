@@ -43,9 +43,10 @@ const modifyExcelTool = {
               name: { type: "string" },
               data: {
                 type: "array",
+                description: "Matriz 2D de celdas como strings. Fórmulas empiezan con '='. Números y booleanos también como string; se convertirán automáticamente.",
                 items: {
                   type: "array",
-                  items: { type: ["string", "number", "boolean", "null"] },
+                  items: { type: "string" },
                 },
               },
             },
