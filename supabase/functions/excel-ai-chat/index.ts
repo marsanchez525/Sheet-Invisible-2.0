@@ -43,9 +43,10 @@ const modifyExcelTool = {
               name: { type: "string" },
               data: {
                 type: "array",
+                description: "Matriz 2D de celdas como strings. Fórmulas empiezan con '='. Números y booleanos también como string; se convertirán automáticamente.",
                 items: {
                   type: "array",
-                  items: { type: ["string", "number", "boolean", "null"] },
+                  items: { type: "string" },
                 },
               },
             },
@@ -74,8 +75,22 @@ function parseExcelToJson(base64: string) {
 function buildExcelFromSheets(sheets: { name: string; data: any[][] }[]) {
   const wb = XLSX.utils.book_new();
   for (const s of sheets) {
-    const ws = XLSX.utils.aoa_to_sheet(s.data);
-    // Convert string formulas starting with '=' into real formulas
+    // Normalize data: convert numeric strings to numbers, leave formulas/text as-is
+    const normalized = (s.data || []).map((row) =>
+      (row || []).map((cell) => {
+        if (cell === null || cell === undefined || cell === "") return null;
+        if (typeof cell !== "string") return cell;
+        if (cell.startsWith("=")) return cell; // formula
+        const trimmed = cell.trim();
+        if (trimmed === "") return cell;
+        // numeric?
+        if (/^-?\d+(\.\d+)?$/.test(trimmed)) return Number(trimmed);
+        if (trimmed.toLowerCase() === "true") return true;
+        if (trimmed.toLowerCase() === "false") return false;
+        return cell;
+      })
+    );
+    const ws = XLSX.utils.aoa_to_sheet(normalized);
     for (const cellRef in ws) {
       if (cellRef.startsWith("!")) continue;
       const cell = ws[cellRef];
@@ -85,7 +100,7 @@ function buildExcelFromSheets(sheets: { name: string; data: any[][] }[]) {
         cell.t = "n";
       }
     }
-    XLSX.utils.book_append_sheet(wb, ws, s.name.substring(0, 31));
+    XLSX.utils.book_append_sheet(wb, ws, (s.name || "Sheet1").substring(0, 31));
   }
   const out = XLSX.write(wb, { type: "array", bookType: "xlsx" });
   // base64 encode
